@@ -53,7 +53,7 @@ class Prefetcher(implicit p: Parameters) extends L1HellaCacheModule()(p)
   //def blockOffBits = lgCacheBlockBytes
   def addrToBlock(addr: UInt) : UInt = addr >> blockOffBits
 
-  val isMMIO = io.in.bits.addr < UInt(0x100000000L)
+  val isMMIO = io.in.bits.addr < UInt(0x80000000L)
   val isTypeOk = isRead(io.in.bits.cmd)
 
   val policyIO = Wire(new PrefetchPolicyIO())

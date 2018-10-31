@@ -198,7 +198,7 @@ class DCacheModule(outer: DCache) extends HellaCacheModule(outer) {
   tlb.io.sfence.bits.asid := io.cpu.s1_data.data
   tlb.io.sfence.bits.addr := s1_req.addr
 
-  val isMMIO = tlb.io.resp.paddr < 0x100000000L.U
+  val isMMIO = tlb.io.resp.paddr < 0x80000000L.U
   val mappedAddr = (tlb.io.resp.paddr & memMask) | memBase
   val s1_paddr = Mux(isMMIO, tlb.io.resp.paddr, mappedAddr)
   val s1_victim_way = Wire(init = replacer.way)

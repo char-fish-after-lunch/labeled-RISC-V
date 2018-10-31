@@ -744,7 +744,7 @@ class NonBlockingDCacheModule(outer: NonBlockingDCache) extends HellaCacheModule
   when (s2_recycle) {
     s1_req := s2_req
   }
-  val isMMIO = dtlb.io.resp.paddr < 0x100000000L.U
+  val isMMIO = dtlb.io.resp.paddr < 0x80000000L.U
   val mappedAddr = (dtlb.io.resp.paddr & memMask) | memBase
   val s1_addr = Mux(isMMIO, dtlb.io.resp.paddr, mappedAddr)
   when (s1_clk_en) {
