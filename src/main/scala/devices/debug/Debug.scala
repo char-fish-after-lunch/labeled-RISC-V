@@ -378,7 +378,7 @@ class TLDebugModuleInner(device: Device, getNComponents: () => Int, beatBytes: I
 
   val cfg = p(DebugModuleParams)
   val hartSelFuncs = p(DebugModuleHartSelKey)
-  val isRV32 = p(XLen)
+  val isRV32 = p(XLen) == 32
 
   val dmiNode = TLRegisterNode(
     address = AddressSet.misaligned(0, DMI_RegAddrs.DMI_DMCONTROL << 2) ++
