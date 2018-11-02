@@ -378,6 +378,7 @@ class TLDebugModuleInner(device: Device, getNComponents: () => Int, beatBytes: I
 
   val cfg = p(DebugModuleParams)
   val hartSelFuncs = p(DebugModuleHartSelKey)
+  val isRV32 = p(XLen)
 
   val dmiNode = TLRegisterNode(
     address = AddressSet.misaligned(0, DMI_RegAddrs.DMI_DMCONTROL << 2) ++
@@ -696,6 +697,16 @@ class TLDebugModuleInner(device: Device, getNComponents: () => Int, beatBytes: I
       SystemBusAccessModule(sb2tl,io.dmactive)(p)
     }.getOrElse((Seq.empty[RegField], Seq.fill[Seq[RegField]](4)(Seq.empty[RegField]), Seq.fill[Seq[RegField]](4)(Seq.empty[RegField])))
 
+    val mem_base_hi = {
+      if (isRV32) UInt(0)
+      else io.cp.memBase(63, 32)
+    }
+
+    val mem_mask_hi = {
+      if (isRV32) UInt(0)
+      else io.cp.memMask(63, 32)
+    }
+
     //--------------------------------------------------------------
     // Program Buffer Access (DMI ... System Bus can override)
     //--------------------------------------------------------------
@@ -732,9 +743,9 @@ class TLDebugModuleInner(device: Device, getNComponents: () => Int, beatBytes: I
       (CP_DSID_SEL    << 2) -> Seq(RWNotify(32, io.cp.sel, io.cp.selUpdate, selRen, io.cp.selWen, Some(RegFieldDesc("dsid-sel", "Hart index")))),
       (CP_DSID_COUNT  << 2) -> Seq(RegField.r(32, UInt(nTiles), RegFieldDesc("dsid-count", "The total number of dsid registers"))),
       (CP_MEM_BASE_LO << 2) -> Seq(RWNotify(32, io.cp.memBase(31, 0), io.cp.updateData, memBaseRen, io.cp.memBaseLoWen, Some(RegFieldDesc("mem-base lo", "Memory base for the current hart")))),
-      (CP_MEM_BASE_HI << 2) -> Seq(RWNotify(32, io.cp.memBase(63, 32), io.cp.updateData, memBaseRen, io.cp.memBaseHiWen, Some(RegFieldDesc("mem-base hi", "Memory base for the current hart")))),
+      (CP_MEM_BASE_HI << 2) -> Seq(RWNotify(32, mem_base_hi, io.cp.updateData, memBaseRen, io.cp.memBaseHiWen, Some(RegFieldDesc("mem-base hi", "Memory base for the current hart")))),
       (CP_MEM_MASK_LO << 2) -> Seq(RWNotify(32, io.cp.memMask(31, 0), io.cp.updateData, memMaskRen, io.cp.memMaskLoWen, Some(RegFieldDesc("mem-mask lo", "Memory mask for the current hart")))),
-      (CP_MEM_MASK_HI << 2) -> Seq(RWNotify(32, io.cp.memMask(63, 32), io.cp.updateData, memMaskRen, io.cp.memMaskHiWen, Some(RegFieldDesc("mem-mask hi", "Memory mask for the current hart")))),
+      (CP_MEM_MASK_HI << 2) -> Seq(RWNotify(32, mem_mask_hi, io.cp.updateData, memMaskRen, io.cp.memMaskHiWen, Some(RegFieldDesc("mem-mask hi", "Memory mask for the current hart")))),
       (CP_BUCKET_FREQ << 2) -> Seq(RWNotify(32, io.cp.bucket.freq, io.cp.updateData, WireInit(false.B), io.cp.bktFreqWen, Some(RegFieldDesc("bucket-freq", "Token Bucket regain frequency for the current hart")))),
       (CP_BUCKET_SIZE << 2) -> Seq(RWNotify(32, io.cp.bucket.size, io.cp.updateData, WireInit(false.B), io.cp.bktSizeWen, Some(RegFieldDesc("bucket-freq", "Token Bucket size for the current hart")))),
       (CP_BUCKET_INC  << 2) -> Seq(RWNotify(32, io.cp.bucket.inc,  io.cp.updateData, WireInit(false.B), io.cp.bktIncWen,  Some(RegFieldDesc("bucket-freq", "Token Bucket regain step size for the current hart"))))
