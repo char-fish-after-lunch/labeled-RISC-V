@@ -1,9 +1,9 @@
 bootrom_img = bootrom.img
 
-GCC=riscv64-unknown-elf-gcc
-OBJCOPY=riscv64-unknown-elf-objcopy
+GCC=riscv32-unknown-elf-gcc
+OBJCOPY=riscv32-unknown-elf-objcopy
 
-all: $(bootrom_img)
+all: $(bootrom_img) bootrom.bin bootrom.elf
 
 %.img: %.bin
 	dd if=$< of=$@ bs=128 count=1

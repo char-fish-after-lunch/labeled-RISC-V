@@ -13,11 +13,13 @@ class WithEmu extends Config ((site, here, up) => {
 
 class LvNAConfigemu extends Config(
   new WithoutFPU
+  ++ new WithRV32 
   ++ new WithNonblockingL1(8)
   ++ new WithNL2CacheCapacity(256)
   ++ new WithNBigCores(2)
   ++ new WithEmu
   ++ new WithRationalRocketTiles
+  ++ new WithExtMemBase(0x80000000L)
   ++ new WithExtMemSize(0x800000L) // 8MB
   ++ new WithNoMMIOPort
   ++ new WithJtagDTM

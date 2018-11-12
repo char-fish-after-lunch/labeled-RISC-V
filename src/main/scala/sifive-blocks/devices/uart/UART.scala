@@ -245,6 +245,7 @@ trait HasUARTTopModuleContents extends HasUARTParameters with HasRegMap {
     UARTCtrlRegs.txfifo -> NonBlockingEnqueue(txq.io.enq),
     UARTCtrlRegs.rxfifo -> NonBlockingDequeue(rxq.io.deq),
 
+/*
     UARTCtrlRegs.stat -> Seq(
       RegField.r(1, rxq.io.count =/= UInt(0)),
       RegField.r(1, rxq.io.count === UInt(uartNRxEntries)),
@@ -262,9 +263,9 @@ trait HasUARTTopModuleContents extends HasUARTParameters with HasRegMap {
     RegField.r(2, UInt(0)),
     RegField.r(1, UInt(0))
   )
+  */
 
 
-/*
 UARTCtrlRegs.txctrl -> Seq(
   RegField(1, txen),
   RegField(stopCountBits, nstop)),
@@ -282,7 +283,6 @@ UARTCtrlRegs.ip -> Seq(
 
 UARTCtrlRegs.div -> Seq(
   RegField(uartDivisorBits, div))
-  */
  )
 }
 
