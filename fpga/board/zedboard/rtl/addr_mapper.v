@@ -7,7 +7,7 @@ module addr_mapper (
     assign  m_axi_araddr = {4'b0001, s_axi_araddr[27:0]};
     assign  m_axi_arburst = s_axi_arburst;
     assign  m_axi_arcache = s_axi_arcache;
-    assign  m_axi_arid    = s_axi_arid   ;
+    // assign  m_axi_arid    = s_axi_arid   ;
 //    assign  m_axi_aruser  = s_axi_aruser ;
     assign  m_axi_arlen   = s_axi_arlen  ;
     assign  m_axi_arlock  = s_axi_arlock ;
@@ -17,7 +17,7 @@ module addr_mapper (
     assign  m_axi_arvalid = s_axi_arvalid;
     assign  m_axi_awburst = s_axi_awburst;
     assign  m_axi_awcache = s_axi_awcache;
-    assign  m_axi_awid    = s_axi_awid   ;
+    // assign  m_axi_awid    = s_axi_awid   ;
 //    assign  m_axi_awuser  = s_axi_awuser ;
     assign  m_axi_awlen   = s_axi_awlen  ;
     assign  m_axi_awlock  = s_axi_awlock ;
@@ -25,12 +25,12 @@ module addr_mapper (
     assign  s_axi_awready = m_axi_awready;
     assign  m_axi_awsize  = s_axi_awsize ;
     assign  m_axi_awvalid = s_axi_awvalid;
-    assign  s_axi_bid     = m_axi_bid    ;
+    // assign  s_axi_bid     = m_axi_bid    ;
     assign  m_axi_bready  = s_axi_bready ;
     assign  s_axi_bresp   = m_axi_bresp  ;
     assign  s_axi_bvalid  = m_axi_bvalid ;
     assign  s_axi_rdata   = m_axi_rdata  ;
-    assign  s_axi_rid     = m_axi_rid    ;
+    // assign  s_axi_rid     = m_axi_rid    ;
     assign  s_axi_rlast   = m_axi_rlast  ;
     assign  m_axi_rready  = s_axi_rready ;
     assign  s_axi_rresp   = m_axi_rresp  ;

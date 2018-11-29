@@ -67,7 +67,7 @@ module system_top (
     .FIXED_IO_ps_porb(FIXED_IO_ps_porb),
     .FIXED_IO_ps_srstb(FIXED_IO_ps_srstb),
 
-    `axi_connect_if(S_AXI_MEM, AXI_MEM_MAPPED),
+    `axi_connect_if_no_id(S_AXI_MEM, AXI_MEM_MAPPED),
     `axi_connect_if_no_id(M_AXI_DMA, AXI_DMA),
     `axilite_connect_if(S_AXILITE_MMIO, AXILITE_MMIO),
 
